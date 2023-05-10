@@ -1,0 +1,7 @@
+# Possible folders for build artifacts
+bin*/
+build*/
+[._]build*/
+[._]bin*/
+*/bin/
+*/build/
