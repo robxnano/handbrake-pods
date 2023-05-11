@@ -1,8 +1,6 @@
 # syntax=docker/dockerfile:1
 FROM clearlinux:latest as base
 ARG GIT_TAG=master
-
-WORKDIR handbrake
 # dependencies for Linux CLI
 RUN swupd update && \
 swupd bundle-add dev-utils dev-utils-dev devpkg-fribidi devpkg-jansson devpkg-libass devpkg-libjpeg-turbo devpkg-libogg devpkg-libsamplerate devpkg-libtheora devpkg-libvorbis devpkg-libvpx devpkg-opus devpkg-speex && \
@@ -30,7 +28,8 @@ if ! grep '\/usr\/local\/lib' /etc/ld.so.conf >/dev/null 2>&1; then \
 fi && \
 swupd bundle-add devpkg-libva devpkg-libdrm
 # end of dependencies
-RUN git clone https://github.com/HandBrake/HandBrake.git . --depth 1 --branch "$GIT_TAG"
+RUN git clone https://github.com/HandBrake/HandBrake.git --depth 1 --branch "$GIT_TAG"
+WORKDIR HandBrake
 
 FROM base as test-cli
 ARG JOBS=6

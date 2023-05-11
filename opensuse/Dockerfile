@@ -1,7 +1,5 @@
 # syntax=docker/dockerfile:1
 FROM opensuse/leap:latest as base
-WORKDIR handbrake
-
 ARG GIT_TAG=master
 # dependencies for Linux CLI
 RUN zypper in -y AppStream autoconf automake binutils bzip2 cmake fontconfig-devel freetype-devel fribidi-devel gcc-c++ git gzip harfbuzz-devel lbzip2 libass-devel libjansson-devel libjpeg8-devel libmp3lame-devel libnuma-devel libogg-devel libopus-devel libsamplerate-devel libtheora-devel libtool libvorbis-devel libxml2-devel libvpx-devel m4 make meson nasm ninja patch pkgconf-pkg-config python speex-devel tar xz-devel zimg-devel zlib-devel && \
@@ -16,7 +14,8 @@ zypper --gpg-auto-import-keys dup -y --from packman-essentials --allow-vendor-ch
 zypper install -y libx264-devel && \
 zypper install -y libva-devel libdrm-devel
 # end of dependencies
-RUN git clone https://github.com/HandBrake/HandBrake.git . --depth 1 --branch "$GIT_TAG"
+RUN git clone https://github.com/HandBrake/HandBrake.git --depth 1 --branch "$GIT_TAG"
+WORKDIR HandBrake
 
 FROM base as test-cli
 ARG JOBS=6

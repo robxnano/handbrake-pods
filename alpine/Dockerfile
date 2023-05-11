@@ -1,13 +1,12 @@
 # syntax=docker/dockerfile:1
 FROM alpine:latest as base
-WORKDIR handbrake
-
 ARG GIT_TAG=master
 # dependencies for Linux CLI
 RUN apk add autoconf automake busybox cmake g++ git jansson-dev lame-dev libass-dev libjpeg-turbo-dev libtheora-dev libvorbis-dev libxml2-dev m4 make nasm ninja numactl-dev opus-dev pkgconf python3 speex-dev x264-dev && \
 apk add libva-dev libdrm-dev
 # end of dependencies
-RUN git clone https://github.com/HandBrake/HandBrake.git . --depth 1 --branch "$GIT_TAG"
+RUN git clone https://github.com/HandBrake/HandBrake.git --depth 1 --branch "$GIT_TAG"
+WORKDIR HandBrake
 
 FROM base as test-cli
 ARG JOBS=6

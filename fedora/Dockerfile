@@ -1,7 +1,5 @@
 # syntax=docker/dockerfile:1
 FROM fedora:latest as base
-WORKDIR handbrake
-
 ARG GIT_TAG=master
 # dependencies for Linux CLI
 RUN dnf install -y appstream autoconf automake binutils bzip2-devel cmake fontconfig-devel freetype-devel fribidi-devel gcc-c++ git harfbuzz-devel jansson-devel lame-devel lbzip2 libass-devel libogg-devel libsamplerate-devel libtheora-devel libtool libvorbis-devel libxml2-devel libvpx-devel m4 make meson nasm ninja-build numactl-devel opus-devel patch pkgconf python speex-devel tar turbojpeg-devel xz-devel zlib-devel && \
@@ -9,7 +7,8 @@ dnf localinstall -y --nogpgcheck https://download1.rpmfusion.org/free/fedora/rpm
 dnf install -y x264-devel && \
 dnf install -y libva-devel libdrm-devel
 # end of dependencies
-RUN git clone https://github.com/HandBrake/HandBrake.git . --depth 1 --branch "$GIT_TAG"
+RUN git clone https://github.com/HandBrake/HandBrake.git --depth 1 --branch "$GIT_TAG"
+WORKDIR HandBrake
 
 FROM base as test-cli
 ARG JOBS=6
