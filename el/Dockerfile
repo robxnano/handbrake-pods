@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM almalinux:9 as base # or rockylinux
+FROM almalinux:9 as base
 ARG GIT_TAG=master
 # dependencies for Linux CLI
 RUN dnf install -y autoconf automake bzip2 cmake diffutils dnf-plugins-core fribidi-devel gcc-c++ git libtool libxml2-devel m4 make numactl-devel patch pkg-config python39 tar xz-devel && \
