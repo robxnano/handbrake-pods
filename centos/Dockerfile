@@ -1,5 +1,6 @@
 # syntax=docker/dockerfile:1
 FROM quay.io/centos/centos:stream9 as base
+ARG GIT_REPO=HandBrake
 ARG GIT_TAG=master
 # dependencies for Linux CLI
 RUN dnf install -y autoconf automake bzip2 cmake diffutils dnf-plugins-core fribidi-devel gcc-c++ git libtool libxml2-devel m4 make numactl-devel patch pkg-config python39 tar xz-devel && \
@@ -11,7 +12,7 @@ dnf localinstall -y --nogpgcheck https://download1.rpmfusion.org/free/el/rpmfusi
 dnf install -y x264-devel && \
 dnf install -y libva-devel libdrm-devel
 # end of dependencies
-RUN git clone https://github.com/HandBrake/HandBrake.git --depth 1 --branch "$GIT_TAG"
+RUN git clone "https://github.com/$GIT_REPO/HandBrake.git" --depth 1 --branch "$GIT_TAG"
 WORKDIR HandBrake
 
 FROM base as test-cli

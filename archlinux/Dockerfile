@@ -1,11 +1,12 @@
 # syntax=docker/dockerfile:1
 FROM archlinux:latest as base
+ARG GIT_REPO=HandBrake
 ARG GIT_TAG=master
 # dependencies for Linux CLI
 RUN pacman -Syu --noconfirm base-devel cmake flac fontconfig freetype2 fribidi git harfbuzz jansson lame libass libbluray libjpeg-turbo libogg libsamplerate libtheora libvorbis libvpx libxml2 meson nasm ninja numactl opus python speex x264 xz && \
 pacman -Syu --noconfirm libva libdrm
 # end of dependencies
-RUN git clone https://github.com/HandBrake/HandBrake.git --depth 1 --branch "$GIT_TAG"
+RUN git clone "https://github.com/$GIT_REPO/HandBrake.git" --depth 1 --branch "$GIT_TAG"
 WORKDIR HandBrake
 
 FROM base as test-cli

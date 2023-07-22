@@ -54,6 +54,7 @@ Distributions without a checkmark don't have official Docker images at the momen
 ### Build Arguments
 Use with `--build-arg ARG=value`.
 
+- `GIT_REPO`: The GitHub user to clone from (default: HandBrake).
 - `GIT_TAG`: The tag to checkout from GitHub (default: master).
 - `PREFIX`: The prefix where the binaries will be installed (default: /usr/local).
 

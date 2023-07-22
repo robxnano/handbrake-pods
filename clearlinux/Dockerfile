@@ -1,5 +1,6 @@
 # syntax=docker/dockerfile:1
 FROM clearlinux:latest as base
+ARG GIT_REPO=HandBrake
 ARG GIT_TAG=master
 # dependencies for Linux CLI
 RUN swupd update && \
@@ -28,7 +29,7 @@ if ! grep '\/usr\/local\/lib' /etc/ld.so.conf >/dev/null 2>&1; then \
 fi && \
 swupd bundle-add devpkg-libva devpkg-libdrm
 # end of dependencies
-RUN git clone https://github.com/HandBrake/HandBrake.git --depth 1 --branch "$GIT_TAG"
+RUN git clone "https://github.com/$GIT_REPO/HandBrake.git" --depth 1 --branch "$GIT_TAG"
 WORKDIR HandBrake
 
 FROM base as test-cli
