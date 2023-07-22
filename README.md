@@ -1,7 +1,7 @@
 # HandBrake Build Dockerfiles
 
 These Dockerfiles can be used to test the HandBrake build process in a container environment, in order to keep the dependency lists up to date.
-They can also be used to generate binaries.
+They can also be used to generate binaries as well as AppImages.
 
 ### Example usage
 First install podman or docker.
@@ -28,6 +28,13 @@ podman build --from rockylinux:latest --output _build el
 Builds the `el` image using Rocky Linux as the base instead of the default AlmaLinux.
 Some alternative image names are listed below.
 
+Building the AppImage:
+
+```
+podman build --from debian:11 --target appimage --output _build debian --build-arg PREFIX=/usr
+```
+Builds an AppImage containing the HandBrake GUI. Using the oldest supported version of Debian or Ubuntu maximises compatibility with other distributions.
+
 ### Platforms
 
 #### Linux
@@ -50,6 +57,7 @@ Distributions without a checkmark don't have official Docker images at the momen
 - `test`: Test building with CLI and GUI dependencies.
 - `binaries` (default): CLI and GTK GUI binaries, as well as extra files.
 - `binaries-cli`: CLI binary only.
+- `appimage`: GUI AppImage for portable use (Debian/Ubuntu only).
 
 ### Build Arguments
 Use with `--build-arg ARG=value`.

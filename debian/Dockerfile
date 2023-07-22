@@ -36,3 +36,14 @@ COPY --from=install-cli /install /
 
 FROM scratch as binaries
 COPY --from=install /install /
+
+FROM install as build-appimage
+RUN rm -f /install/usr/bin/HandBrakeCLI && \
+curl -LO https://github.com/linuxdeploy/linuxdeploy/releases/download/1-alpha-20220822-1/linuxdeploy-x86_64.AppImage && \
+curl -LO https://github.com/linuxdeploy/linuxdeploy-plugin-gtk/raw/master/linuxdeploy-plugin-gtk.sh && \
+chmod +x linuxdeploy-* && \
+./linuxdeploy-x86_64.AppImage --appimage-extract && \
+squashfs-root/AppRun --appdir /install --library /usr/lib/x86_64-linux-gnu/libharfbuzz.so.0 --plugin gtk --output appimage
+
+FROM scratch as appimage
+COPY --from=build-appimage /HandBrake/HandBrake*.AppImage /
