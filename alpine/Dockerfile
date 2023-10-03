@@ -3,7 +3,7 @@ FROM alpine:latest as base
 ARG GIT_REPO=HandBrake
 ARG GIT_TAG=master
 # dependencies for Linux CLI
-RUN apk add autoconf automake busybox cmake g++ git jansson-dev lame-dev libass-dev libjpeg-turbo-dev libtheora-dev libvorbis-dev libxml2-dev m4 make nasm ninja numactl-dev opus-dev pkgconf python3 speex-dev x264-dev && \
+RUN apk add autoconf automake busybox cmake g++ git jansson-dev lame-dev libass-dev libjpeg-turbo-dev libtheora-dev libtool libvorbis-dev libvpx-dev libxml2-dev m4 make meson nasm ninja numactl-dev opus-dev patch pkgconf python3 speex-dev tar x264-dev && \
 apk add libva-dev libdrm-dev
 # end of dependencies
 RUN git clone "https://github.com/$GIT_REPO/HandBrake.git" --depth 1 --branch "$GIT_TAG"
@@ -22,7 +22,7 @@ FROM test-cli as test
 ARG JOBS=6
 ARG PREFIX=/usr/local
 # dependencies for GTK GUI
-RUN apk add gstreamer-dev gst-plugins-base-dev gst-plugins-good gtk+3.0-dev
+RUN apk add desktop-file-utils gstreamer-dev gst-libav gst-plugins-base-dev gtk+3.0-dev
 # end of dependencies
 RUN ./configure --enable-qsv --enable-nvenc --enable-vce --force --prefix="${PREFIX}" && \
 make -C build -j${JOBS}
@@ -35,7 +35,3 @@ COPY --from=install-cli /install /
 
 FROM scratch as binaries
 COPY --from=install /install /
-
-Alpine Linux
-
-
