@@ -23,7 +23,7 @@ FROM test-cli as test
 ARG JOBS=6
 ARG PREFIX=/usr/local
 # dependencies for GTK GUI
-RUN apt-get install -y gettext gstreamer1.0-libav libdbus-glib-1-dev libglib2.0-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgtk-3-dev
+RUN apt-get install -y gettext gstreamer1.0-libav libglib2.0-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgtk-3-dev
 # end of dependencies
 RUN ./configure --enable-qsv --enable-nvenc --enable-vce --force --prefix="${PREFIX}" && \
 make -C build -j${JOBS}

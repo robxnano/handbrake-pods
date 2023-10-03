@@ -31,7 +31,7 @@ Some alternative image names are listed below.
 Building the AppImage:
 
 ```
-podman build --from debian:11 --target appimage --output _build debian --build-arg PREFIX=/usr
+podman build --from debian:12 --target appimage --output _build debian --build-arg PREFIX=/usr
 ```
 Builds an AppImage containing the HandBrake GUI. Using the oldest supported version of Debian or Ubuntu maximises compatibility with other distributions.
 

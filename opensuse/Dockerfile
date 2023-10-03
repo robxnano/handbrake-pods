@@ -33,7 +33,7 @@ FROM test-cli as test
 ARG JOBS=6
 ARG PREFIX=/usr/local
 # dependencies for GTK GUI
-RUN zypper install -y dbus-1-glib-devel gstreamer-devel gstreamer-plugins-base-devel gstreamer-plugins-libav gtk3-devel
+RUN zypper install -y gstreamer-devel gstreamer-plugins-base-devel gstreamer-plugins-libav gtk3-devel
 # end of dependencies
 RUN ./configure --enable-qsv --enable-nvenc --enable-vce --force --prefix="${PREFIX}" && \
 make -C build -j${JOBS}
