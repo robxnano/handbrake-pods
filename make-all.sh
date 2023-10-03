@@ -23,7 +23,7 @@ build alpine && \
 build archlinux && \
 build centos stream8 && \
 build clearlinux && \
-build debian 11 && \
+build debian 12 && \
 build fedora 38 && \
 build opensuse/leap 15.4 opensuse && \
 build opensuse/tumbleweed latest opensuse && \
