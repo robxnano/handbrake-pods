@@ -50,7 +50,7 @@ Distributions without a checkmark don't have official Docker images at the momen
 - [ ] Gentoo
 - [x] OpenSUSE (`opensuse/leap:latest`, `opensuse/tumbleweed:latest`)
 - [x] Ubuntu
-- [ ] Void
+- [x] Void (`ghcr.io/void-linux/void-glibc`, `ghcr.io/void-linux/void-musl`)
 
 ### Targets
 - `test-cli`: Test building with CLI dependencies.
