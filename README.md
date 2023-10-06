@@ -52,6 +52,9 @@ Distributions without a checkmark don't have official Docker images at the momen
 - [x] Ubuntu
 - [x] Void (`ghcr.io/void-linux/void-glibc`, `ghcr.io/void-linux/void-musl`)
 
+#### Windows
+- [x] MinGW (Ubuntu 22.04, x86_64)
+
 ### Targets
 - `test-cli`: Test building with CLI dependencies.
 - `test`: Test building with CLI and GUI dependencies.
