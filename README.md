@@ -38,22 +38,19 @@ Builds an AppImage containing the HandBrake GUI. Using the oldest supported vers
 ### Platforms
 
 #### Linux
-Distributions without a checkmark don't have official Docker images at the moment.
-
-- [x] Alpine Linux
-- [x] Arch Linux
-- [x] CentOS Stream (`centos:stream9`, `centos:stream8`)
-- [x] Clear Linux
-- [x] Debian
-- [x] Enterprise Linux (`almalinux:9`, `rockylinux:latest`)
-- [x] Fedora
-- [ ] Gentoo
-- [x] OpenSUSE (`opensuse/leap:latest`, `opensuse/tumbleweed:latest`)
-- [x] Ubuntu
-- [x] Void (`ghcr.io/void-linux/void-glibc`, `ghcr.io/void-linux/void-musl`)
+- Alpine Linux
+- Arch Linux (`archlinux`, `manjarolinux/base`)
+- CentOS Stream (`centos:stream9`, `centos:stream8`)
+- Clear Linux
+- Debian
+- Enterprise Linux (`almalinux`, `rockylinux`)
+- Fedora
+- OpenSUSE (`opensuse/leap`, `opensuse/tumbleweed`)
+- Ubuntu
+- Void (`ghcr.io/void-linux/void-glibc`, `ghcr.io/void-linux/void-musl`)
 
 #### Windows
-- [x] MinGW (Ubuntu 22.04, x86_64)
+- MinGW (Ubuntu 22.04, x86_64)
 
 ### Targets
 - `test-cli`: Test building with CLI dependencies.
