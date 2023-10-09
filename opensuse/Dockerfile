@@ -3,7 +3,7 @@ FROM opensuse/leap:latest as base
 ARG GIT_REPO=HandBrake
 ARG GIT_TAG=master
 # dependencies for Linux CLI
-RUN zypper in -y AppStream autoconf automake binutils bzip2 cmake fontconfig-devel freetype-devel fribidi-devel gcc-c++ git gzip harfbuzz-devel lbzip2 libass-devel libjansson-devel libjpeg8-devel libmp3lame-devel libnuma-devel libogg-devel libopus-devel libsamplerate-devel libtheora-devel libtool libvorbis-devel libxml2-devel libvpx-devel m4 make meson nasm ninja patch pkg-config python3 speex-devel tar xz-devel zimg-devel zlib-devel && \
+RUN zypper in -y autoconf automake binutils bzip2 cmake fontconfig-devel freetype-devel fribidi-devel gcc-c++ git gzip harfbuzz-devel lbzip2 libass-devel libjansson-devel libjpeg8-devel libmp3lame-devel libnuma-devel libogg-devel libopus-devel libsamplerate-devel libtheora-devel libtool libvorbis-devel libxml2-devel libvpx-devel m4 make meson nasm ninja patch pkg-config python3 speex-devel tar xz-devel zimg-devel zlib-devel && \
 if grep "opensuse-tumbleweed" /etc/os-release ; then \
     zypper ar -cfp 90 'https://ftp.fau.de/packman/suse/openSUSE_Tumbleweed/Essentials' packman-essentials ; \
 elif grep "opensuse-slowroll" /etc/os-release ; then \
@@ -33,7 +33,7 @@ FROM test-cli as test
 ARG JOBS=6
 ARG PREFIX=/usr/local
 # dependencies for GTK GUI
-RUN zypper install -y gstreamer-devel gstreamer-plugins-base-devel gstreamer-plugins-libav gtk3-devel
+RUN zypper install -y AppStream gstreamer-devel gstreamer-plugins-base-devel gstreamer-plugins-libav gtk3-devel
 # end of dependencies
 RUN ./configure --enable-qsv --enable-nvenc --enable-vce --force --prefix="${PREFIX}" && \
 make -C build -j${JOBS}
