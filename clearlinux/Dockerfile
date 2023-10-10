@@ -51,7 +51,8 @@ RUN ./configure --enable-qsv --enable-nvenc --enable-vce --force --prefix="${PRE
 make -C build -j${JOBS}
 
 FROM test as install
-RUN make -C build DESTDIR=/install install
+RUN make -C build DESTDIR=/install install && \
+make -C build install
 
 FROM scratch as binaries-cli
 COPY --from=install-cli /install /
