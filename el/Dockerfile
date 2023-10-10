@@ -6,7 +6,11 @@ ARG GIT_TAG=master
 RUN dnf install -y autoconf automake bzip2 cmake diffutils dnf-plugins-core fribidi-devel gcc-c++ git libtool libxml2-devel m4 make numactl-devel patch pkg-config python39 tar xz-devel && \
 dnf config-manager --set-enabled crb || dnf config-manager --set-enabled powertools && \
 dnf install -y jansson-devel lame-devel libogg-devel libsamplerate-devel libtheora-devel libvorbis-devel libvpx-devel meson nasm ninja-build opus-devel speex-devel turbojpeg-devel && \
-dnf install -y epel-release && \
+if grep "CentOS Stream" /etc/os-release ; then \
+    dnf install -y epel-next-release ; \
+else \
+    dnf install -y epel-release ; \
+fi && \
 dnf install -y libass-devel && \
 dnf localinstall -y --nogpgcheck https://download1.rpmfusion.org/free/el/rpmfusion-free-release-$(rpm -E %rhel).noarch.rpm && \
 dnf install -y x264-devel && \

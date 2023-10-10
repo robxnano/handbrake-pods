@@ -40,10 +40,9 @@ Builds an AppImage containing the HandBrake GUI. Using the oldest supported vers
 #### Linux
 - Alpine Linux
 - Arch Linux (`archlinux`, `manjarolinux/base`)
-- CentOS Stream (`centos:stream9`, `centos:stream8`)
 - Clear Linux
 - Debian
-- Enterprise Linux (`almalinux`, `rockylinux`)
+- Enterprise Linux (`almalinux`, `rockylinux`, `centos:stream9`, `centos:stream8`)
 - Fedora
 - OpenSUSE (`opensuse/leap`, `opensuse/tumbleweed`)
 - Ubuntu
