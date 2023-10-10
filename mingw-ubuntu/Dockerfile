@@ -1,13 +1,17 @@
 # syntax=docker/dockerfile:1
-FROM fedora:latest as base
+FROM ubuntu:latest as base
 ARG GIT_REPO=HandBrake
 ARG GIT_TAG=master
 # dependencies for Windows CLI and hb.dll
-RUN dnf install -y autoconf automake binutils bzip2 cargo cargo-c clang cmake diffutils mingw64-gcc-c++ git libtool m4 make meson nasm ninja-build patch pkgconf python rust rust-std-static-x86_64-pc-windows-gnu tar xz
+RUN export DEBIAN_FRONTEND=noninteractive && apt-get update && \
+apt-get install -y autoconf automake build-essential clang cmake curl g++-mingw-w64-x86-64 gcc-mingw-w64-x86-64 git libssl-dev libtool libtool-bin m4 make meson nasm ninja-build patch pkg-config tar zip
 # end of dependencies
 RUN useradd -ms /usr/bin/bash runner
 USER runner
 WORKDIR /home/runner
+ENV PATH /home/runner/.cargo/bin:${PATH}
+RUN curl https://sh.rustup.rs | sh -s -- -y --profile minimal --target x86_64-pc-windows-gnu && \
+cargo install cargo-c
 RUN git clone "https://github.com/$GIT_REPO/HandBrake.git" --depth 1 --branch "$GIT_TAG"
 WORKDIR HandBrake
 
