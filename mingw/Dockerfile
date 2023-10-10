@@ -4,7 +4,7 @@ ARG GIT_REPO=HandBrake
 ARG GIT_TAG=master
 # dependencies for Windows CLI and hb.dll
 RUN export DEBIAN_FRONTEND=noninteractive && apt-get update && \
-apt-get install -y autoconf automake autopoint build-essential clang cmake curl g++-mingw-w64-x86-64 gcc-mingw-w64-x86-64 git libssl-dev libtool libtool-bin m4 make meson nasm ninja-build patch pkg-config tar zip
+apt-get install -y autoconf automake build-essential clang cmake curl g++-mingw-w64-x86-64 gcc-mingw-w64-x86-64 git libssl-dev libtool libtool-bin m4 make meson nasm ninja-build patch pkg-config tar zip
 # end of dependencies
 RUN useradd -ms /usr/bin/bash runner
 USER runner
