@@ -23,7 +23,7 @@ FROM test-cli as test
 ARG JOBS=6
 ARG PREFIX=/usr/local
 # dependencies for GTK GUI
-RUN apt-get install -y appstream desktop-file-utils gstreamer1.0-libav libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgtk-3-dev
+RUN apt-get install -y appstream desktop-file-utils gstreamer1.0-libav gstreamer1.0-plugins-good libgstreamer-plugins-base1.0-dev libgtk-3-dev
 # end of dependencies
 RUN ./configure --enable-qsv --enable-nvenc --enable-vce --force --prefix="${PREFIX}" && \
 make -C build -j${JOBS}
@@ -31,12 +31,6 @@ make -C build -j${JOBS}
 FROM test as install
 RUN make -C build DESTDIR=/install install && \
 make -C build install
-
-FROM scratch as binaries-cli
-COPY --from=install-cli /install /
-
-FROM scratch as binaries
-COPY --from=install /install /
 
 FROM install as build-appimage
 RUN rm -f /install/usr/bin/HandBrakeCLI && \
@@ -48,3 +42,9 @@ squashfs-root/AppRun --appdir /install --library /usr/lib/x86_64-linux-gnu/libha
 
 FROM scratch as appimage
 COPY --from=build-appimage /HandBrake/HandBrake*.AppImage /
+
+FROM scratch as binaries-cli
+COPY --from=install-cli /install /
+
+FROM scratch as binaries
+COPY --from=install /install /

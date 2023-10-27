@@ -22,7 +22,7 @@ FROM test-cli as test
 ARG JOBS=6
 ARG PREFIX=/usr/local
 # dependencies for GTK GUI
-RUN apk add desktop-file-utils gstreamer-dev gst-libav gst-plugins-base-dev gtk+3.0-dev
+RUN apk add desktop-file-utils gst-libav gst-plugins-base-dev gst-plugins-good gtk+3.0-dev
 # end of dependencies
 RUN ./configure --enable-qsv --enable-nvenc --enable-vce --force --prefix="${PREFIX}" && \
 make -C build -j${JOBS}
