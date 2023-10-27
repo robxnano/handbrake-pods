@@ -18,6 +18,8 @@ make -C build -j${JOBS}
 
 FROM test-cli as install-cli
 RUN make -C build DESTDIR=/install install
+WORKDIR /install
+RUN tar -cJf /handbrake-cli-bin.tar.xz "`ls`"
 
 FROM test-cli as test
 ARG JOBS=6
@@ -31,6 +33,8 @@ make -C build -j${JOBS}
 FROM test as install
 RUN make -C build DESTDIR=/install install && \
 make -C build install
+WORKDIR /install
+RUN tar -cJf /handbrake-bin.tar.xz "`ls`"
 
 FROM install as build-appimage
 RUN rm -f /install/usr/bin/HandBrakeCLI && \
@@ -44,7 +48,7 @@ FROM scratch as appimage
 COPY --from=build-appimage /HandBrake/HandBrake*.AppImage /
 
 FROM scratch as binaries-cli
-COPY --from=install-cli /install /
+COPY --from=install-cli /install/handbrake-cli-bin.tar.xz /
 
 FROM scratch as binaries
-COPY --from=install /install /
+COPY --from=install /handbrake-bin.tar.xz /
