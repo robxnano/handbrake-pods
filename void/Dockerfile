@@ -24,7 +24,7 @@ FROM test-cli as test
 ARG JOBS=6
 ARG PREFIX=/usr/local
 # dependencies for GTK GUI
-RUN xbps-install -Syu desktop-file-utils gettext glib-devel gst-libav gst-plugins-base1-devel gst-plugins-good1 gtk+3-devel
+RUN xbps-install -Syu desktop-file-utils gettext gst-libav gst-plugins-good1 gtk4-devel
 # end of dependencies
 RUN ./configure --enable-qsv --enable-nvenc --enable-vce --force --prefix="${PREFIX}" && \
 make -C build -j${JOBS}

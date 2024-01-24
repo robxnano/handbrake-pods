@@ -35,7 +35,7 @@ FROM test-cli as test
 ARG JOBS=6
 ARG PREFIX=/usr/local
 # dependencies for GTK GUI
-RUN zypper install -y AppStream desktop-file-utils gstreamer-plugins-base-devel gstreamer-plugins-good gstreamer-plugins-libav gtk3-devel
+RUN zypper install -y AppStream desktop-file-utils gstreamer-plugins-good gstreamer-plugins-libav gtk4-devel
 # end of dependencies
 RUN ./configure --enable-qsv --enable-nvenc --enable-vce --force --prefix="${PREFIX}" && \
 make -C build -j${JOBS}

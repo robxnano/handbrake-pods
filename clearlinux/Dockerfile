@@ -47,7 +47,7 @@ FROM test-cli as test
 ARG JOBS=6
 ARG PREFIX=/usr/local
 # dependencies for GTK GUI
-RUN swupd bundle-add devpkg-gstreamer devpkg-gst-plugins-bad devpkg-gst-plugins-base devpkg-gtk3 os-core-update-dev
+RUN swupd bundle-add devpkg-gstreamer devpkg-gst-plugins-bad devpkg-gst-plugins-base devpkg-gtk4 os-core-update-dev
 # end of dependencies
 RUN export PKG_CONFIG_PATH=/usr/local/lib && \
 ./configure --enable-qsv --enable-nvenc --enable-vce --force --prefix="${PREFIX}" && \
