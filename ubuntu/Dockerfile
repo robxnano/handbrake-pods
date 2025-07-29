@@ -13,7 +13,8 @@ WORKDIR HandBrake
 FROM base as test-cli
 ARG JOBS=6
 ARG PREFIX=/usr/local
-RUN ./configure --disable-gtk --enable-qsv --enable-nvenc --enable-vce --force --prefix="${PREFIX}" && \
+ARG EXTRA_ARGS=
+RUN ./configure --disable-gtk --enable-qsv --enable-nvenc --enable-vce --force --prefix="${PREFIX}" ${EXTRA_ARGS} && \
 make -C build -j${JOBS}
 
 FROM test-cli as install-cli
@@ -24,10 +25,11 @@ RUN tar -czf /handbrake-cli-bin.tar.gz "`ls`"
 FROM test-cli as test
 ARG JOBS=6
 ARG PREFIX=/usr/local
+ARG EXTRA_ARGS=
 # dependencies for GTK GUI
 RUN apt-get install -y appstream desktop-file-utils gettext gstreamer1.0-libav gstreamer1.0-plugins-good libgtk-4-dev
 # end of dependencies
-RUN ./configure --enable-qsv --enable-nvenc --enable-vce --force --prefix="${PREFIX}" && \
+RUN ./configure --enable-qsv --enable-nvenc --enable-vce --force --prefix="${PREFIX}" ${EXTRA_ARGS} && \
 make -C build -j${JOBS}
 
 FROM test as install
@@ -37,15 +39,15 @@ WORKDIR /install
 RUN tar -czf /handbrake-bin.tar.gz "`ls`"
 
 FROM install as build-appimage
+WORKDIR /linuxdeploy
 RUN rm -f /install/usr/bin/HandBrakeCLI && \
-curl -LO https://github.com/linuxdeploy/linuxdeploy/releases/download/1-alpha-20220822-1/linuxdeploy-x86_64.AppImage && \
+curl -LO https://github.com/linuxdeploy/linuxdeploy/releases/download/1-alpha-20250213-2/linuxdeploy-x86_64.AppImage && \
 curl -LO https://github.com/linuxdeploy/linuxdeploy-plugin-gtk/raw/master/linuxdeploy-plugin-gtk.sh && \
 chmod +x linuxdeploy-* && \
-./linuxdeploy-x86_64.AppImage --appimage-extract && \
-squashfs-root/AppRun --appdir /install --library /usr/lib/x86_64-linux-gnu/libharfbuzz.so.0 --plugin gtk --output appimage
+./linuxdeploy-x86_64.AppImage --appimage-extract-and-run --appdir /install --plugin gtk --output appimage
 
 FROM scratch as appimage
-COPY --from=build-appimage /HandBrake/HandBrake*.AppImage /
+COPY --from=build-appimage /linuxdeploy/HandBrake*.AppImage /
 
 FROM scratch as binaries-cli
 COPY --from=install-cli /install/handbrake-cli-bin.tar.gz /

@@ -3,7 +3,7 @@ FROM almalinux:9 as base
 ARG GIT_REPO=HandBrake
 ARG GIT_TAG=master
 # dependencies for Linux CLI
-RUN dnf install -y autoconf automake bzip2 cmake diffutils dnf-plugins-core fribidi-devel gcc-c++ git libtool libxml2-devel m4 make numactl-devel patch pkg-config python39 tar xz-devel && \
+RUN dnf install -y autoconf automake bzip2 cmake diffutils dnf-plugins-core file fribidi-devel gcc-c++ git libtool libxml2-devel m4 make numactl-devel patch pkg-config python39 tar xz-devel && \
 dnf config-manager --set-enabled crb || dnf config-manager --set-enabled powertools && \
 dnf install -y jansson-devel lame-devel libogg-devel libsamplerate-devel libtheora-devel libvorbis-devel libvpx-devel meson nasm ninja-build opus-devel speex-devel turbojpeg-devel && \
 if grep "CentOS Stream" /etc/os-release ; then \
@@ -45,6 +45,16 @@ make -C build install
 WORKDIR /install
 RUN tar -czf /handbrake-bin.tar.gz "`ls`"
 
+FROM install as build-appimage
+WORKDIR /linuxdeploy
+RUN rm -f /install/usr/bin/HandBrakeCLI && \
+curl -LO https://github.com/linuxdeploy/linuxdeploy/releases/download/1-alpha-20250213-2/linuxdeploy-x86_64.AppImage && \
+curl -LO https://github.com/linuxdeploy/linuxdeploy-plugin-gtk/raw/master/linuxdeploy-plugin-gtk.sh && \
+chmod +x linuxdeploy-* && \
+./linuxdeploy-x86_64.AppImage --appimage-extract-and-run --appdir /install --plugin gtk --output appimage
+
+FROM scratch as appimage
+COPY --from=build-appimage /linuxdeploy/HandBrake*.AppImage /
 FROM scratch as binaries-cli
 COPY --from=install-cli /handbrake-cli-bin.tar.gz /
 
