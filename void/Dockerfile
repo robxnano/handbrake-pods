@@ -3,7 +3,7 @@ FROM ghcr.io/void-linux/void-musl:latest as base
 ARG GIT_REPO=HandBrake
 ARG GIT_TAG=master
 # dependencies for Linux CLI
-RUN xbps-install -Syu autoconf automake bzip2-devel cmake diffutils fontconfig-devel file findutils freetype-devel fribidi-devel git gcc gzip harfbuzz-devel jansson-devel lame-devel lbzip2 libass-devel libflac-devel libjpeg-turbo-devel liblzma-devel libnuma-devel libogg-devel libsamplerate-devel libtheora-devel libtool libvorbis-devel libvpx-devel libxml2-devel m4 make meson nasm ninja opus-devel patch pkg-config python3 speex-devel x264-devel && \
+RUN xbps-install -Syu autoconf automake bzip2-devel cmake diffutils fontconfig-devel file findutils freetype-devel fribidi-devel git gcc gzip harfbuzz-devel jansson-devel lame-devel lbzip2 libass-devel libflac-devel libjpeg-turbo-devel liblzma-devel libnuma-devel libogg-devel libsamplerate-devel libtheora-devel libtool libvorbis-devel libvpx-devel libxml2-devel m4 make meson nasm ninja opus-devel patch pkg-config python3 speex-devel tar x264-devel && \
 xbps-install -Syu libva-devel libdrm-devel
 # end of dependencies
 RUN git clone "https://github.com/$GIT_REPO/HandBrake.git" --depth 1 --branch "$GIT_TAG"
